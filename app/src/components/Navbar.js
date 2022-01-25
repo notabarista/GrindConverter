@@ -1,17 +1,19 @@
-import { Outlet, Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+import { Outlet } from "react-router-dom";
+import '../App.css'
 
 const Navbar = () => {
   return (
     <div>
       <nav>
 
-      <Link to="/">CONVERTER</Link>
+      <HashLink to="#">CONVERTER</HashLink>
         <ul>
           <li>
-            <Link to="/about">About</Link>
+            <HashLink to="#about">About</HashLink>
           </li>
           <li>
-            <Link to="/faq">FAQ</Link>
+            <HashLink to="#faq">FAQ</HashLink>
           </li>
         </ul>
       </nav>
