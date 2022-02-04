@@ -1,13 +1,12 @@
 import { HashLink } from "react-router-hash-link";
 import { Outlet } from "react-router-dom";
-import '../App.css'
+import "../App.css";
 
 const Navbar = () => {
   return (
     <div>
       <nav>
-
-      <HashLink to="#">CONVERTER</HashLink>
+        <HashLink to="#">CONVERTER</HashLink>
         <ul>
           <li>
             <HashLink to="#about">About</HashLink>
@@ -20,7 +19,7 @@ const Navbar = () => {
 
       <Outlet />
     </div>
-  )
+  );
 };
 
 export default Navbar;
