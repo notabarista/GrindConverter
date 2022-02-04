@@ -1,6 +1,6 @@
 import { HashLink } from "react-router-hash-link";
 import { Outlet } from "react-router-dom";
-import "../App.css";
+import "../App.scss";
 
 const Navbar = () => {
   return (
