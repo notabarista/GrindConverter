@@ -24,8 +24,56 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-nav {
+a,
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.nav {
+  background: #1e1e1e;
+  color: #e5e5e5;
   position: fixed;
+  left: 0;
+  right: 0;
+}
+
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  // color: #000;
+  // background: rgba(255, 255, 255, 0.15);
+  // backdrop-filter: blur(71px);
+  z-index: 10000;
+}
+.nav-link {
+  display: inline;
+}
+
+.logo {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    display: block;
+    padding-left: 0;
+    padding-top: 1rem;
+    padding-bottom: 0;
+    padding-right: 0;
+  }
+  .hide-mobile {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
 }
 
 .btn {
@@ -73,4 +121,111 @@ nav {
   p {
     line-height: 221%;
   }
+}
+
+.converter {
+  min-height: calc(100vh - 60px);
+  background: url("assets/images/coffeegrains.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  label {
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+}
+
+// accordion
+.accordion-item {
+  background-color: #fff;
+  border-left: none;
+  border-right: none;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #f0a600;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.accordion-button::after {
+  height: 30px;
+  position: relative;
+  width: 30px;
+
+  &::before,
+  &::after {
+    background-color: #888888;
+    content: "";
+    position: absolute;
+    transition: transform 0.25s ease-out;
+  }
+
+  // Vertical line
+  &::before {
+    height: 21px;
+    left: 50%;
+    margin-left: -1px;
+    top: 5px;
+    width: 2px;
+  }
+
+  // Horizontal line
+  &::after {
+    height: 2px;
+    left: 5px;
+    margin-top: -1px;
+    top: 50%;
+    width: 21px;
+  }
+  // cursor: pointer;
+
+  // &::before {
+  //   background-color: #f0a600;
+  //   transform: rotate3d(0, 0, 1, 90deg);
+  // }
+  // &::after {
+  //   background-color: #f0a600;
+  //   transform: rotate3d(0, 0, 1, 180deg);
+  // }
+}
+
+// custom accordion styles
+.panel-wrap {
+  margin-bottom: 5px;
+}
+
+.panel-wrap.active-panel .panel-header {
+  background: #396ea5;
+}
+.panel-wrap.active-panel .panel-header button {
+  color: #ffffff;
+}
+
+.panel-header {
+  border: 1px solid #cccc;
+  font-weight: normal;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.panel-header button {
+  border: none;
+  background: transparent;
+}
+.panel-header button:focus {
+  outline: 0px auto -webkit-focus-ring-color;
+}
+
+.panel-body {
+  border: 1px solid #dddddd;
+  background: #efefef;
+  color: #333333;
+  padding: 5px;
+  border-top: none;
 }

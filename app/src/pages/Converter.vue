@@ -38,15 +38,7 @@
         </div>
         <div class="col-lg-6">
           <div
-            class="
-              h-100
-              w-100
-              p-3
-              d-flex
-              flex-xl-row flex-column
-              justify-content-lg-end
-              align-items-center
-            "
+            class="h-100 w-100 p-3 d-flex flex-xl-row flex-column justify-content-lg-end align-items-center"
           >
             <img src="~/assets/images/grinder.png" />
             <div class="text-center px-3">
@@ -60,22 +52,4 @@
   </div>
 </template>
 
-<style lang="scss">
-.converter {
-  min-height: calc(100vh - 60px);
-  background: url('~/assets/images/coffeegrains.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-
-  label {
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-  }
-}
-</style>
+<style lang="scss"></style>

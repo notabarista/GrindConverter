@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Converter from "./pages/Converter";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
 const baseURL = "https://nab-grinder-converter.herokuapp.com";
@@ -28,6 +29,7 @@ export default class App extends Component {
             </>
           ))}
         </ul>
+        <Converter />
         <About />
         <FAQ />
       </>

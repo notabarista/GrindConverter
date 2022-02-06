@@ -39,70 +39,33 @@ export default {
     return {
       isScroll: false,
       isOpen: false,
-    }
+    };
   },
 
   computed: {},
 
   mounted() {
-    window.addEventListener('scroll', this.onScroll)
+    window.addEventListener("scroll", this.onScroll);
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.onScroll)
+    window.removeEventListener("scroll", this.onScroll);
   },
   methods: {
     openNav() {
-      this.isOpen = !this.isOpen
-      console.log(this.isOpen)
+      this.isOpen = !this.isOpen;
+      console.log(this.isOpen);
     },
     onScroll() {
       // Get the current scroll position
       const currentScrollPosition =
-        window.pageYOffset || document.documentElement.scrollTop
+        window.pageYOffset || document.documentElement.scrollTop;
       // Because of momentum scrolling on mobiles, we shouldn't continue if it is less than zero
       if (currentScrollPosition < 0) {
-        return
+        return;
       }
-      this.isScroll = currentScrollPosition > 0
+      this.isScroll = currentScrollPosition > 0;
     },
   },
-}
+};
 </script>
-<style lang="scss" scoped>
-.nav {
-  background: #1e1e1e;
-  color: #e5e5e5;
-}
-.nav-sticky {
-  position: sticky;
-  top: 0;
-  // color: #000;
-  // background: rgba(255, 255, 255, 0.15);
-  // backdrop-filter: blur(71px);
-  z-index: 10000;
-}
-.nav-link {
-  display: inline;
-}
-
-.logo {
-  font-size: 1.1rem;
-}
-
-@media (max-width: 768px) {
-  .nav-link {
-    display: block;
-    padding-left: 0;
-    padding-top: 1rem;
-    padding-bottom: 0;
-    padding-right: 0;
-  }
-  .hide-mobile {
-    display: none;
-  }
-
-  .show {
-    display: block;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
