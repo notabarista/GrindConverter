@@ -7,7 +7,23 @@ const FAQ = () => {
         <h2 class="text-center mb-5 pb-4">FAQ</h2>
         <Accordion defaultActiveKey={["0"]} alwaysOpen>
           <Accordion.Item eventKey="0">
-            <Accordion.Header>Accordion Item #1</Accordion.Header>
+            <Accordion.Header>
+              <div class="w-100 d-flex justify-content-between align-items-center">
+                <span>Accordion Header #1 </span>
+
+                <div
+                  class="
+                  round-border
+                  p-1
+                  d-flex
+                  justify-content-center
+                  align-items-center
+                "
+                >
+                  <div class="ion-expand-icon"></div>
+                </div>
+              </div>
+            </Accordion.Header>
             <Accordion.Body>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -19,7 +35,23 @@ const FAQ = () => {
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
-            <Accordion.Header>Accordion Item #2</Accordion.Header>
+            <Accordion.Header>
+              <div class="w-100 d-flex justify-content-between align-items-center">
+                <span>Accordion Header #2 </span>
+
+                <div
+                  class="
+                  round-border
+                  p-1
+                  d-flex
+                  justify-content-center
+                  align-items-center
+                "
+                >
+                  <div class="ion-expand-icon"></div>
+                </div>
+              </div>
+            </Accordion.Header>
             <Accordion.Body>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut

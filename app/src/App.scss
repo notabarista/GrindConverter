@@ -41,6 +41,7 @@ a,
   position: fixed;
   left: 0;
   right: 0;
+  z-index: 1000;
 }
 
 .nav-sticky {
@@ -57,23 +58,6 @@ a,
 
 .logo {
   font-size: 1.1rem;
-}
-
-@media (max-width: 768px) {
-  .nav-link {
-    display: block;
-    padding-left: 0;
-    padding-top: 1rem;
-    padding-bottom: 0;
-    padding-right: 0;
-  }
-  .hide-mobile {
-    display: none;
-  }
-
-  .show {
-    display: block;
-  }
 }
 
 .btn {
@@ -148,13 +132,51 @@ a,
   border-right: none;
 }
 
-.accordion-button:not(.collapsed) {
-  color: #f0a600;
-  background-color: transparent;
-  box-shadow: none;
+.accordion-button {
+  font-size: 1.15rem;
+  &:focus {
+    border-color: transparent;
+    box-shadow: none;
+  }
 }
 
+.accordion-button:not(.collapsed) {
+  color: #f0a600;
+  font-weight: 700;
+  background-color: transparent;
+  box-shadow: none;
+
+  .round-border {
+    border-color: #f0a600;
+  }
+
+  // Minus sign
+  .ion-expand-icon {
+    cursor: pointer;
+
+    &::before {
+      background-color: #f0a600;
+      transform: rotate3d(0, 0, 1, 90deg);
+    }
+    &::after {
+      background-color: #f0a600;
+      transform: rotate3d(0, 0, 1, 180deg);
+    }
+  }
+}
+
+// custom accordion styles
+
 .accordion-button::after {
+  display: none;
+}
+
+.round-border {
+  border: 2px solid #888888;
+  border-radius: 100%;
+}
+
+.ion-expand-icon {
   height: 30px;
   position: relative;
   width: 30px;
@@ -184,48 +206,28 @@ a,
     top: 50%;
     width: 21px;
   }
-  // cursor: pointer;
-
-  // &::before {
-  //   background-color: #f0a600;
-  //   transform: rotate3d(0, 0, 1, 90deg);
-  // }
-  // &::after {
-  //   background-color: #f0a600;
-  //   transform: rotate3d(0, 0, 1, 180deg);
-  // }
+}
+.item-icon-right {
+  .ion-expand-icon {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+  }
 }
 
-// custom accordion styles
-.panel-wrap {
-  margin-bottom: 5px;
-}
+@media (max-width: 768px) {
+  .nav-link {
+    display: block;
+    padding-left: 0;
+    padding-top: 1rem;
+    padding-bottom: 0;
+    padding-right: 0;
+  }
+  .hide-mobile {
+    display: none;
+  }
 
-.panel-wrap.active-panel .panel-header {
-  background: #396ea5;
-}
-.panel-wrap.active-panel .panel-header button {
-  color: #ffffff;
-}
-
-.panel-header {
-  border: 1px solid #cccc;
-  font-weight: normal;
-  border-radius: 5px 5px 0px 0px;
-}
-
-.panel-header button {
-  border: none;
-  background: transparent;
-}
-.panel-header button:focus {
-  outline: 0px auto -webkit-focus-ring-color;
-}
-
-.panel-body {
-  border: 1px solid #dddddd;
-  background: #efefef;
-  color: #333333;
-  padding: 5px;
-  border-top: none;
+  .show {
+    display: block;
+  }
 }
