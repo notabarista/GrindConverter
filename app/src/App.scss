@@ -215,6 +215,16 @@ a,
   }
 }
 
+.footer {
+  background: #1e1e1e;
+  color: #e5e5e5;
+  font-weight: 600;
+  position: static;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 @media (max-width: 768px) {
   .nav-link {
     display: block;

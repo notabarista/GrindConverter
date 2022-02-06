@@ -21,14 +21,17 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <ul>
+        {/* commented this out from the layout */}
+
+        {/* <ul>
           {this.state.data.map((item) => (
             <>
               <li key={item.grinder}>Name: {item.grinder}</li>
               <li key={item.grindSize}>Size: {item.grindSize}</li>
             </>
           ))}
-        </ul>
+        </ul> */}
+
         <Converter />
         <About />
         <FAQ />

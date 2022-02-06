@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HashLink } from "react-router-hash-link";
 import { Outlet } from "react-router-dom";
-import "../App.scss";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
