@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Converter from "./pages/Converter";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
 const baseURL = "https://nab-grinder-converter.herokuapp.com";
@@ -20,14 +21,18 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <ul>
+        {/* commented this out from the layout */}
+
+        {/* <ul>
           {this.state.data.map((item) => (
             <>
               <li key={item.grinder}>Name: {item.grinder}</li>
               <li key={item.grindSize}>Size: {item.grindSize}</li>
             </>
           ))}
-        </ul>
+        </ul> */}
+
+        <Converter />
         <About />
         <FAQ />
       </>

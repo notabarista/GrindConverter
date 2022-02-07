@@ -1,0 +1,243 @@
+// import bootstrap
+@import "~bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: none;
+  text-decoration: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #3f3f46;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a,
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.nav {
+  background: #1e1e1e;
+  color: #e5e5e5;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  // color: #000;
+  // background: rgba(255, 255, 255, 0.15);
+  // backdrop-filter: blur(71px);
+  z-index: 10000;
+}
+.nav-link {
+  display: inline;
+}
+
+.logo {
+  font-size: 1.1rem;
+}
+
+.btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+.btn-full {
+  background: #f0a600;
+  border: 1px solid #f0a600;
+  color: #1e1e1e;
+
+  &:focus {
+    background: #f0a600;
+    color: #1e1e1e;
+  }
+  &:hover {
+    background-color: transparent;
+    color: #f0a600;
+    border-color: #f0a600;
+    transform: scale(1.005);
+  }
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.about {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("assets/images/istockphoto-1066887298-612x612.jpg");
+  color: #e5e5e5;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  p {
+    line-height: 221%;
+  }
+}
+
+.converter {
+  min-height: calc(100vh - 60px);
+  background: url("assets/images/coffeegrains.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  label {
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+}
+
+// accordion
+.accordion-item {
+  background-color: #fff;
+  border-left: none;
+  border-right: none;
+}
+
+.accordion-button {
+  font-size: 1.15rem;
+  &:focus {
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.accordion-button:not(.collapsed) {
+  color: #f0a600;
+  font-weight: 700;
+  background-color: transparent;
+  box-shadow: none;
+
+  .round-border {
+    border-color: #f0a600;
+  }
+
+  // Minus sign
+  .ion-expand-icon {
+    cursor: pointer;
+
+    &::before {
+      background-color: #f0a600;
+      transform: rotate3d(0, 0, 1, 90deg);
+    }
+    &::after {
+      background-color: #f0a600;
+      transform: rotate3d(0, 0, 1, 180deg);
+    }
+  }
+}
+
+// custom accordion styles
+
+.accordion-button::after {
+  display: none;
+}
+
+.round-border {
+  border: 2px solid #888888;
+  border-radius: 100%;
+}
+
+.ion-expand-icon {
+  height: 30px;
+  position: relative;
+  width: 30px;
+
+  &::before,
+  &::after {
+    background-color: #888888;
+    content: "";
+    position: absolute;
+    transition: transform 0.25s ease-out;
+  }
+
+  // Vertical line
+  &::before {
+    height: 21px;
+    left: 50%;
+    margin-left: -1px;
+    top: 5px;
+    width: 2px;
+  }
+
+  // Horizontal line
+  &::after {
+    height: 2px;
+    left: 5px;
+    margin-top: -1px;
+    top: 50%;
+    width: 21px;
+  }
+}
+.item-icon-right {
+  .ion-expand-icon {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+  }
+}
+
+.footer {
+  background: #1e1e1e;
+  color: #e5e5e5;
+  font-weight: 600;
+  position: static;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    display: block;
+    padding-left: 0;
+    padding-top: 1rem;
+    padding-bottom: 0;
+    padding-right: 0;
+  }
+  .hide-mobile {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+}
