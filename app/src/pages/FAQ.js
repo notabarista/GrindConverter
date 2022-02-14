@@ -2,17 +2,17 @@ import Accordion from "react-bootstrap/Accordion";
 
 const FAQ = () => {
   return (
-    <div class="container py-5 my-5" id="faq">
-      <div class="py-md-5">
-        <h2 class="text-center mb-5 pb-4">FAQ</h2>
+    <div className="container py-5 my-5" id="faq">
+      <div className="py-md-5">
+        <h2 className="text-center mb-5 pb-4">FAQ</h2>
         <Accordion defaultActiveKey={["0"]} alwaysOpen>
           <Accordion.Item eventKey="0">
             <Accordion.Header>
-              <div class="w-100 d-flex justify-content-between align-items-center">
+              <div className="w-100 d-flex justify-content-between align-items-center">
                 <span>Accordion Header #1 </span>
 
                 <div
-                  class="
+                  className="
                   round-border
                   p-1
                   d-flex
@@ -20,7 +20,7 @@ const FAQ = () => {
                   align-items-center
                 "
                 >
-                  <div class="ion-expand-icon"></div>
+                  <div className="ion-expand-icon"></div>
                 </div>
               </div>
             </Accordion.Header>
@@ -36,11 +36,11 @@ const FAQ = () => {
           </Accordion.Item>
           <Accordion.Item eventKey="1">
             <Accordion.Header>
-              <div class="w-100 d-flex justify-content-between align-items-center">
+              <div className="w-100 d-flex justify-content-between align-items-center">
                 <span>Accordion Header #2 </span>
 
                 <div
-                  class="
+                  className="
                   round-border
                   p-1
                   d-flex
@@ -48,7 +48,7 @@ const FAQ = () => {
                   align-items-center
                 "
                 >
-                  <div class="ion-expand-icon"></div>
+                  <div className="ion-expand-icon"></div>
                 </div>
               </div>
             </Accordion.Header>
