@@ -29,9 +29,9 @@ const Navbar = () => {
                     <path
                       d="M4 18H20M4 6H20H4ZM4 12H12H4Z"
                       stroke="#e5e5e5"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </div>

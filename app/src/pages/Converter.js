@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import Grinder from "../assets/images/grinder.png";
-
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
+import {getAllData} from "../components/DAO";
 
 const theme = (theme) => ({
   ...theme,
@@ -19,10 +14,57 @@ const theme = (theme) => ({
   },
 });
 
-const CONVERTER = () => {
-  const [selectedGrinder, setSelectedGrinder] = useState(null);
-  const [selectedBrewMethod, setSelectedBrewMethod] = useState(null);
-  const [selectedGrindSize, setSelectedGrindSize] = useState(null);
+ function CONVERTER () {
+  const [grinders, setGrinders] = useState(null);
+  const [brewingMethods, setBrewingMethods] = useState(null);
+  const [grindSize, setGrindSize] = useState(null);
+  const [data, setData] = useState(null);
+  const [selectedGrinderIndex, setSelectedGrinderIndex] = useState(null);
+  const [grindSizeText, setGrindSizeText] = useState(null);
+
+  function upateGrindSize()
+  {
+    setGrindSizeText(grindSize[0].label);
+  }
+
+  function updateBrewingMethodSizes(brewingMethodIndex)
+  {
+    console.log(data[selectedGrinderIndex].grinderBrewingMethods[brewingMethodIndex].grindSize);
+    let size = data[selectedGrinderIndex].grinderBrewingMethods[brewingMethodIndex].grindSize;
+    setGrindSize([{value:size, label:size}])
+    
+  }
+
+  function updateBrewingMethods(grinderIndex)
+  {
+    let grinderMethods = data[grinderIndex].grinderBrewingMethods;
+
+    let arr = []
+      for(let index=0;index< grinderMethods.length;++index)
+      {
+        arr.push({value:index, label:grinderMethods[index].brewingMethod});
+      }
+
+      setBrewingMethods(arr);
+  }
+
+
+async function fetchData()
+{ 
+  const resp = await getAllData();
+      let arr = []
+      for(let index=0;index< resp.data.length;++index)
+      {
+        arr.push({value:index, label:resp.data[index].grinder});
+      }
+      setGrinders(arr);
+      setData(resp.data);
+} 
+
+  useEffect(()=>
+  {
+   fetchData()
+  },[])
 
   return (
     <div className="converter">
@@ -34,9 +76,9 @@ const CONVERTER = () => {
               <Form.Group className="mb-4" controlId="formBasicEmail">
                 <Form.Label>Grinder</Form.Label>
                 <Select
-                  defaultValue={selectedGrinder}
-                  onChange={setSelectedGrinder}
-                  options={options}
+                  defaultValue={{}}
+                  onChange={(e)=>{updateBrewingMethods(e.value);setSelectedGrinderIndex(e.value);}}
+                  options={grinders}
                   theme={theme}
                 />
               </Form.Group>
@@ -44,9 +86,9 @@ const CONVERTER = () => {
               <Form.Group className="mb-4" controlId="formBasicEmail">
                 <Form.Label>Brew method</Form.Label>
                 <Select
-                  defaultValue={selectedBrewMethod}
-                  onChange={setSelectedBrewMethod}
-                  options={options}
+                  defaultValue={{}}
+                  onChange={(e)=>{updateBrewingMethodSizes(e.value);}}
+                  options={brewingMethods}
                   theme={theme}
                 />
               </Form.Group>
@@ -54,9 +96,9 @@ const CONVERTER = () => {
               <Form.Group className="mb-4" controlId="formBasicEmail">
                 <Form.Label>Grind size</Form.Label>
                 <Select
-                  defaultValue={selectedGrindSize}
-                  onChange={setSelectedGrindSize}
-                  options={options}
+                  defaultValue={{}}
+                  onChange={upateGrindSize}
+                  options={grindSize}
                   theme={theme}
                 />
               </Form.Group>
@@ -76,8 +118,8 @@ const CONVERTER = () => {
             >
               <img src={Grinder} alt="Grinder" />
               <div className="text-center px-3">
-                <p className="mb-0">Filter medium fine between</p>
-                <h3>25-35 clicks</h3>
+                <p className="mb-0">{grindSizeText?"Filter medium fine between":""}</p>
+                <h3>{grindSizeText} {grindSizeText?"clicks":""}</h3>
               </div>
             </div>
           </div>
