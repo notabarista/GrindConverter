@@ -20,17 +20,18 @@ function CONVERTER() {
   const [brewingMethodsOptions, setBrewingMethodsOptions] = useState(null);
   const [grindSizesOptions, setGrindSizesOptions] = useState(null);
   const [brewingMethods, setBrewingMethods] = useState(null);
-  const [selectedGrinderIndex, setSelectedGrinderIndex] = useState(null);
   const [grindSize, setGrindSize] = useState(null);
   const [grindSizeText, setGrindSizeText] = useState(null);
   const [grindSizes, setGrindSizes] = useState(null);
   const mediaURL = useRef(Grinder);
   const toggleAutoText = useRef(true);
+  const brewingMethodIndex = useRef();
+  const selectedGrinderIndex = useRef();
   const [value, setValue] = useState();
 
   async function updateBrewingMethodSizes() {
     const resp = await dao.getSizesByGrinderId(
-      grinders[selectedGrinderIndex].id
+      grinders[selectedGrinderIndex.current].id
     );
     const grindSizesData = resp.data;
     setGrindSizes(grindSizesData);
@@ -68,27 +69,62 @@ function CONVERTER() {
     setGrinders(grindersData);
   }
 
+  // useEffect(() => {
+  //   if (grindSizes) {
+  //     populateWithTwoArgsOptions(setGrindSizesOptions, grindSizes, "grindSize");
+  //   }
+  // }, [grindSizes]);
+
   useEffect(() => {
-    if (grindSizes) {
+    if (grinders && grindSizes) {
       populateWithTwoArgsOptions(setGrindSizesOptions, grindSizes, "grindSize");
     }
-  }, [grindSizes]);
+  }, [grinders, grindSizes]);
 
-  const updateGrindSizesIndex = useCallback((index) =>
-  {
-    setValue({ value: index, label: grindSizesOptions[index].label });
-  },[grindSizesOptions]);
+  const updateGrindSizesIndex = useCallback(
+    (index) => {
+      setValue({ value: index, label: grindSizesOptions[index].label });
+    },
+    [grindSizesOptions]
+  );
 
-  const updateGrindSizesText = useCallback((index) =>
+  const updateGrindSizesText = useCallback(
+    (index) => {
+      setGrindSizeText(grindSizes[index]["clicksPerRound"]);
+    },
+    [grindSizes]
+  );
+
+  const onChangeGrinder = useCallback(
+    (index) => {
+      selectedGrinderIndex.current=index;
+      updateBrewingMethods();
+      mediaURL.current = grinders[index]["grinderMediaUrl"];
+      //The url has by default simple quotes
+      mediaURL.current = mediaURL.current.split("'").join("");
+      toggleAutoText.current = true;
+    },
+    [grinders,toggleAutoText]
+  );
+
+  const onChangeGrindSizes = useCallback(
+    (index) => {
+      updateGrindSizesIndex(index);
+      toggleAutoText.current = false;
+      updateGrindSizesText(index);
+    },
+    [toggleAutoText, updateGrindSizesIndex, updateGrindSizesText]
+  );
+
+  const onChangeBrewMethod = useCallback((index) =>
   {
-    setGrindSizeText(grindSizes[index]["clicksPerRound"]);
-    console.log(grindSizeText);
-  },[grindSizes, grindSizeText])
+                    brewingMethodIndex.current = index;
+                    setGrindSize(brewingMethods[index]["grindSize"]);
+                    toggleAutoText.current = true;
+  },[brewingMethodIndex,brewingMethods,toggleAutoText])
 
   useEffect(() => {
-
-    if(toggleAutoText.current === false)
-    return;
+    if (toggleAutoText.current === false) return;
 
     if (grindSize && grindSizesOptions) {
       let index = 0;
@@ -101,9 +137,14 @@ function CONVERTER() {
 
       updateGrindSizesIndex(index);
       updateGrindSizesText(index);
-      
     }
-  }, [grindSize, grindSizesOptions, grindSizes,updateGrindSizesIndex,updateGrindSizesText]);
+  }, [
+    grindSize,
+    grindSizesOptions,
+    grindSizes,
+    updateGrindSizesIndex,
+    updateGrindSizesText,
+  ]);
 
   useEffect(() => {
     if (brewingMethods) {
@@ -137,11 +178,8 @@ function CONVERTER() {
                 <Select
                   defaultValue={{}}
                   onChange={(e) => {
-                    setSelectedGrinderIndex(e.value);
-                    updateBrewingMethods();
-                    mediaURL.current = grinders[e.value]["grinderMediaUrl"];
-                    //The url has by default simple quotes
-                    mediaURL.current = mediaURL.current.split("'").join("");
+                    onChangeGrinder(e.value);
+                    updateBrewingMethodSizes(brewingMethodIndex.current);
                   }}
                   options={grindersOptions}
                   theme={theme}
@@ -154,8 +192,7 @@ function CONVERTER() {
                   defaultValue={{}}
                   onChange={(e) => {
                     updateBrewingMethodSizes(e.value);
-                    setGrindSize(brewingMethods[e.value]["grindSize"]);
-                    toggleAutoText.current = true;
+                    onChangeBrewMethod(e.value);
                   }}
                   options={brewingMethodsOptions}
                   theme={theme}
@@ -168,9 +205,7 @@ function CONVERTER() {
                   value={value}
                   defaultValue={{}}
                   onChange={(e) => {
-                    updateGrindSizesIndex(e.value);
-                    toggleAutoText.current = false;
-                    updateGrindSizesText(e.value);
+                    onChangeGrindSizes(e.value);
                   }}
                   options={grindSizesOptions}
                   theme={theme}
