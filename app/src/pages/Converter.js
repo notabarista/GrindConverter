@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import Grinder from "../assets/images/grinder.png";
-import {getAllData} from "../components/DAO";
+import * as dao from "../components/DAO";
 
 const theme = (theme) => ({
   ...theme,
@@ -14,57 +14,116 @@ const theme = (theme) => ({
   },
 });
 
- function CONVERTER () {
+function CONVERTER() {
   const [grinders, setGrinders] = useState(null);
+  const [grindersOptions, setGrindersOptions] = useState(null);
+  const [brewingMethodsOptions, setBrewingMethodsOptions] = useState(null);
+  const [grindSizesOptions, setGrindSizesOptions] = useState(null);
   const [brewingMethods, setBrewingMethods] = useState(null);
-  const [grindSize, setGrindSize] = useState(null);
-  const [data, setData] = useState(null);
   const [selectedGrinderIndex, setSelectedGrinderIndex] = useState(null);
+  const [grindSize, setGrindSize] = useState(null);
   const [grindSizeText, setGrindSizeText] = useState(null);
+  const [grindSizes, setGrindSizes] = useState(null);
+  const mediaURL = useRef(Grinder);
+  const toggleAutoText = useRef(true);
+  const [value, setValue] = useState();
 
-  function upateGrindSize()
-  {
-    setGrindSizeText(grindSize[0].label);
+  async function updateBrewingMethodSizes() {
+    const resp = await dao.getSizesByGrinderId(
+      grinders[selectedGrinderIndex].id
+    );
+    const grindSizesData = resp.data;
+    setGrindSizes(grindSizesData);
   }
 
-  function updateBrewingMethodSizes(brewingMethodIndex)
-  {
-    console.log(data[selectedGrinderIndex].grinderBrewingMethods[brewingMethodIndex].grindSize);
-    let size = data[selectedGrinderIndex].grinderBrewingMethods[brewingMethodIndex].grindSize;
-    setGrindSize([{value:size, label:size}])
-    
+  async function updateBrewingMethods() {
+    const resp = await dao.getAllBrewingMethods();
+    const brewingMethodsData = resp.data;
+    setBrewingMethods(brewingMethodsData);
   }
 
-  function updateBrewingMethods(grinderIndex)
-  {
-    let grinderMethods = data[grinderIndex].grinderBrewingMethods;
+  function populateOptions(setFunction, inArr, arg) {
+    let opts = [];
+    for (let index = 0; index < inArr.length; ++index) {
+      opts.push({ value: index, label: inArr[index][arg] });
+    }
+    setFunction(opts);
+  }
 
-    let arr = []
-      for(let index=0;index< grinderMethods.length;++index)
-      {
-        arr.push({value:index, label:grinderMethods[index].brewingMethod});
+  function populateWithTwoArgsOptions(setFunction, inArr, arg) {
+    let opts = [];
+    for (let index = 0; index < inArr.length; ++index) {
+      opts.push({
+        value: index,
+        label:
+          inArr[index][arg] + " | " + inArr[index]["clicksPerRound"] + " click",
+      });
+    }
+    setFunction(opts);
+  }
+
+  async function updateGrinders() {
+    const resp = await dao.getAllGrinders();
+    const grindersData = resp.data;
+    setGrinders(grindersData);
+  }
+
+  useEffect(() => {
+    if (grindSizes) {
+      populateWithTwoArgsOptions(setGrindSizesOptions, grindSizes, "grindSize");
+    }
+  }, [grindSizes]);
+
+  const updateGrindSizesIndex = useCallback((index) =>
+  {
+    setValue({ value: index, label: grindSizesOptions[index].label });
+  },[grindSizesOptions]);
+
+  const updateGrindSizesText = useCallback((index) =>
+  {
+    setGrindSizeText(grindSizes[index]["clicksPerRound"]);
+    console.log(grindSizeText);
+  },[grindSizes, grindSizeText])
+
+  useEffect(() => {
+
+    if(toggleAutoText.current === false)
+    return;
+
+    if (grindSize && grindSizesOptions) {
+      let index = 0;
+
+      for (; index < grindSizesOptions.length; index++) {
+        if (grindSizes[index]["grindSize"] === grindSize) {
+          break;
+        }
       }
 
-      setBrewingMethods(arr);
-  }
+      updateGrindSizesIndex(index);
+      updateGrindSizesText(index);
+      
+    }
+  }, [grindSize, grindSizesOptions, grindSizes,updateGrindSizesIndex,updateGrindSizesText]);
 
+  useEffect(() => {
+    if (brewingMethods) {
+      populateOptions(
+        setBrewingMethodsOptions,
+        brewingMethods,
+        "brewingMethod"
+      );
+    }
+  }, [brewingMethods]);
 
-async function fetchData()
-{ 
-  const resp = await getAllData();
-      let arr = []
-      for(let index=0;index< resp.data.length;++index)
-      {
-        arr.push({value:index, label:resp.data[index].grinder});
-      }
-      setGrinders(arr);
-      setData(resp.data);
-} 
+  useEffect(() => {
+    if (grinders) {
+      populateOptions(setGrindersOptions, grinders, "grinder");
+    }
+  }, [grinders]);
 
-  useEffect(()=>
-  {
-   fetchData()
-  },[])
+  useEffect(() => {
+    updateGrinders();
+  }, []);
 
   return (
     <div className="converter">
@@ -77,8 +136,14 @@ async function fetchData()
                 <Form.Label>Grinder</Form.Label>
                 <Select
                   defaultValue={{}}
-                  onChange={(e)=>{updateBrewingMethods(e.value);setSelectedGrinderIndex(e.value);}}
-                  options={grinders}
+                  onChange={(e) => {
+                    setSelectedGrinderIndex(e.value);
+                    updateBrewingMethods();
+                    mediaURL.current = grinders[e.value]["grinderMediaUrl"];
+                    //The url has by default simple quotes
+                    mediaURL.current = mediaURL.current.split("'").join("");
+                  }}
+                  options={grindersOptions}
                   theme={theme}
                 />
               </Form.Group>
@@ -87,8 +152,12 @@ async function fetchData()
                 <Form.Label>Brew method</Form.Label>
                 <Select
                   defaultValue={{}}
-                  onChange={(e)=>{updateBrewingMethodSizes(e.value);}}
-                  options={brewingMethods}
+                  onChange={(e) => {
+                    updateBrewingMethodSizes(e.value);
+                    setGrindSize(brewingMethods[e.value]["grindSize"]);
+                    toggleAutoText.current = true;
+                  }}
+                  options={brewingMethodsOptions}
                   theme={theme}
                 />
               </Form.Group>
@@ -96,9 +165,14 @@ async function fetchData()
               <Form.Group className="mb-4" controlId="formBasicEmail">
                 <Form.Label>Grind size</Form.Label>
                 <Select
+                  value={value}
                   defaultValue={{}}
-                  onChange={upateGrindSize}
-                  options={grindSize}
+                  onChange={(e) => {
+                    updateGrindSizesIndex(e.value);
+                    toggleAutoText.current = false;
+                    updateGrindSizesText(e.value);
+                  }}
+                  options={grindSizesOptions}
                   theme={theme}
                 />
               </Form.Group>
@@ -116,10 +190,14 @@ async function fetchData()
                   align-items-center
                 "
             >
-              <img src={Grinder} alt="Grinder" />
+              <img src={mediaURL.current} alt="Grinder" />
               <div className="text-center px-3">
-                <p className="mb-0">{grindSizeText?"Filter medium fine between":""}</p>
-                <h3>{grindSizeText} {grindSizeText?"clicks":""}</h3>
+                <p className="mb-0">
+                  {grindSizeText ? "Filter medium fine between" : ""}
+                </p>
+                <h3>
+                  {grindSizeText} {grindSizeText ? "clicks" : ""}
+                </h3>
               </div>
             </div>
           </div>
@@ -127,6 +205,6 @@ async function fetchData()
       </div>
     </div>
   );
-};
+}
 
 export default CONVERTER;
