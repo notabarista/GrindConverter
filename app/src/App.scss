@@ -108,7 +108,8 @@ a,
 }
 
 .converter {
-  min-height: calc(100vh - 60px);
+  min-height: 100vh;
+  padding-top: 69px;
   background: url("assets/images/coffeegrains.png");
   background-repeat: no-repeat;
   background-size: cover;
