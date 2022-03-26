@@ -170,7 +170,7 @@ function CONVERTER() {
 
   return (
     <div className="converter">
-      <div className="container pt-5">
+      <div className="container py-5">
         {/* <h1>Converter</h1>  */}
         <div className="row">
           <div className="col-xl-5 col-lg-6">
@@ -223,12 +223,18 @@ function CONVERTER() {
                   p-3
                   d-flex
                   flex-xl-row flex-column
-                  justify-content-lg-end
+                  justify-content-lg-center
                   align-items-center
                 "
             >
-              <img src={mediaURL.current} alt="Grinder" />
-              <div className="text-center px-3">
+              <div>
+                <img
+                  src={mediaURL.current}
+                  className="grinder-img"
+                  alt="Grinder"
+                />
+              </div>
+              <div className="text-center ps-3 mt-lg-0 mt-3">
                 <p className="mb-0">
                   {grindSizeText ? "Filter medium fine between" : ""}
                 </p>
