@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import Grinder from "../assets/images/grinder.png";
@@ -121,7 +121,7 @@ function CONVERTER() {
     [brewingMethodIndex, brewingMethods, toggleAutoText]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (toggleAutoText.current === false) return;
 
     if (grindSize && grindSizesOptions) {
@@ -160,7 +160,7 @@ function CONVERTER() {
     }
   }, [grinders]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     updateGrinders();
   }, []);
 
@@ -170,7 +170,7 @@ function CONVERTER() {
         <div className="row">
           <div className="col-xl-5 col-lg-6">
             <form className="my-5">
-              <Form.Group className="mb-4" controlId="formBasicEmail">
+              <Form.Group className="mb-4">
                 <Form.Label>Grinder</Form.Label>
                 <Select
                   defaultValue={{}}
@@ -183,7 +183,7 @@ function CONVERTER() {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-4" controlId="formBasicEmail">
+              <Form.Group className="mb-4">
                 <Form.Label>Brew method</Form.Label>
                 <Select
                   defaultValue={{}}
@@ -196,7 +196,7 @@ function CONVERTER() {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-4" controlId="formBasicEmail">
+              <Form.Group className="mb-4">
                 <Form.Label>Grind size</Form.Label>
                 <Select
                   value={value}
