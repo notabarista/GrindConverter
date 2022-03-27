@@ -16,9 +16,9 @@ const theme = (theme) => ({
 
 function CONVERTER() {
   const [grinders, setGrinders] = useState(null);
-  const [grindersOptions, setGrindersOptions] = useState(null);
-  const [brewingMethodsOptions, setBrewingMethodsOptions] = useState(null);
-  const [grindSizesOptions, setGrindSizesOptions] = useState(null);
+  const [grindersOptions, setGrindersOptions] = useState([]);
+  const [brewingMethodsOptions, setBrewingMethodsOptions] = useState([]);
+  const [grindSizesOptions, setGrindSizesOptions] = useState([]);
   const [brewingMethods, setBrewingMethods] = useState(null);
   const [grindSize, setGrindSize] = useState(null);
   const [grindSizeText, setGrindSizeText] = useState(null);
@@ -97,14 +97,14 @@ function CONVERTER() {
 
   const onChangeGrinder = useCallback(
     (index) => {
-      selectedGrinderIndex.current=index;
+      selectedGrinderIndex.current = index;
       updateBrewingMethods();
       mediaURL.current = grinders[index]["grinderMediaUrl"];
       //The url has by default simple quotes
       mediaURL.current = mediaURL.current.split("'").join("");
       toggleAutoText.current = true;
     },
-    [grinders,toggleAutoText]
+    [grinders, toggleAutoText]
   );
 
   const onChangeGrindSizes = useCallback(
@@ -116,12 +116,14 @@ function CONVERTER() {
     [toggleAutoText, updateGrindSizesIndex, updateGrindSizesText]
   );
 
-  const onChangeBrewMethod = useCallback((index) =>
-  {
-                    brewingMethodIndex.current = index;
-                    setGrindSize(brewingMethods[index]["grindSize"]);
-                    toggleAutoText.current = true;
-  },[brewingMethodIndex,brewingMethods,toggleAutoText])
+  const onChangeBrewMethod = useCallback(
+    (index) => {
+      brewingMethodIndex.current = index;
+      setGrindSize(brewingMethods[index]["grindSize"]);
+      toggleAutoText.current = true;
+    },
+    [brewingMethodIndex, brewingMethods, toggleAutoText]
+  );
 
   useEffect(() => {
     if (toggleAutoText.current === false) return;
@@ -168,7 +170,7 @@ function CONVERTER() {
 
   return (
     <div className="converter">
-      <div className="container pt-5">
+      <div className="container py-5">
         {/* <h1>Converter</h1>  */}
         <div className="row">
           <div className="col-xl-5 col-lg-6">
@@ -221,12 +223,18 @@ function CONVERTER() {
                   p-3
                   d-flex
                   flex-xl-row flex-column
-                  justify-content-lg-end
+                  justify-content-lg-center
                   align-items-center
                 "
             >
-              <img src={mediaURL.current} alt="Grinder" />
-              <div className="text-center px-3">
+              <div>
+                <img
+                  src={mediaURL.current}
+                  className="grinder-img"
+                  alt="Grinder"
+                />
+              </div>
+              <div className="text-center ps-3 mt-lg-0 mt-3">
                 <p className="mb-0">
                   {grindSizeText ? "Filter medium fine between" : ""}
                 </p>

@@ -1,8 +1,8 @@
 const About = () => {
   return (
-    <div class="about py-5" id="about">
-      <div class="container py-5 my-5">
-        <h2 class="text-center mb-5">ABOUT</h2>
+    <div className="about py-5" id="about">
+      <div className="container py-5 my-5">
+        <h2 className="text-center mb-5">ABOUT</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget nulla
@@ -17,8 +17,8 @@ const About = () => {
           occaecat cupidatat non proident, sunt in culpa qui officia deserunt
           mollit anim id est laborum.
         </p>
-        <div class="d-flex justify-content-center w-100">
-          <button class="btn btn-full mt-5 font-bold text-center">
+        <div className="d-flex justify-content-center w-100">
+          <button className="btn btn-full mt-5 font-bold text-center">
             Visit Not A Barista
           </button>
         </div>

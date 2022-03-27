@@ -108,7 +108,9 @@ a,
 }
 
 .converter {
-  min-height: calc(100vh - 60px);
+  // min-height: 100vh;
+
+  padding-top: 77px;
   background: url("assets/images/coffeegrains.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -122,6 +124,10 @@ a,
   h3 {
     font-size: 2.5rem;
     font-weight: 700;
+  }
+
+  .grinder-img {
+    max-width: 300px;
   }
 }
 
@@ -239,5 +245,11 @@ a,
 
   .show {
     display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .grinder-img {
+    max-width: 300px;
   }
 }
