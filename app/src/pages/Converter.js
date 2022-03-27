@@ -14,6 +14,8 @@ const theme = (theme) => ({
   },
 });
 
+const grinder_unit = "μm";
+
 function CONVERTER() {
   const [grinders, setGrinders] = useState(null);
   const [grindersOptions, setGrindersOptions] = useState([]);
@@ -57,7 +59,7 @@ function CONVERTER() {
       opts.push({
         value: index,
         label:
-          inArr[index][arg] + " | " + inArr[index]["clicksPerRound"] + " click",
+          inArr[index][arg]+" "+ grinder_unit + " | " + inArr[index]["clicksPerRound"] + " click",
       });
     }
     setFunction(opts);
@@ -68,12 +70,6 @@ function CONVERTER() {
     const grindersData = resp.data;
     setGrinders(grindersData);
   }
-
-  // useEffect(() => {
-  //   if (grindSizes) {
-  //     populateWithTwoArgsOptions(setGrindSizesOptions, grindSizes, "grindSize");
-  //   }
-  // }, [grindSizes]);
 
   useEffect(() => {
     if (grinders && grindSizes) {
@@ -171,7 +167,6 @@ function CONVERTER() {
   return (
     <div className="converter">
       <div className="container py-5">
-        {/* <h1>Converter</h1>  */}
         <div className="row">
           <div className="col-xl-5 col-lg-6">
             <form className="my-5">
