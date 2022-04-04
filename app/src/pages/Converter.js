@@ -96,8 +96,6 @@ function CONVERTER() {
       selectedGrinderIndex.current = index;
       updateBrewingMethods();
       mediaURL.current = grinders[index]["grinderMediaUrl"];
-      //The url has by default simple quotes
-      mediaURL.current = mediaURL.current.split("'").join("");
       toggleAutoText.current = true;
     },
     [grinders, toggleAutoText]
